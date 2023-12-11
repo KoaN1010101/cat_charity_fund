@@ -78,7 +78,7 @@ async def update_charity_project(
     """Только для суперюзеров."""
     await check_charity_project_name_unique(obj_in.name, session)
     charity_project = await check_charity_project_exists(project_id, session)
-    
+
     await check_charity_project_before_update(
         obj_in, charity_project, session
     )

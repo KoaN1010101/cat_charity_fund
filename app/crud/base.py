@@ -43,7 +43,7 @@ class CRUDBase:
     ):
         db_objs = await session.execute(select(self.model))
         return db_objs.scalars().all()
-    
+
     async def update(
             self,
             db_obj,
