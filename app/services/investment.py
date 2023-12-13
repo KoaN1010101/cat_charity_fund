@@ -16,8 +16,7 @@ async def investing(
     ).order_by(model_db.create_date))
     source_db_all = source_db_all.scalars().all()
     for source_db in source_db_all:
-        obj_in, source_db = await distribution(obj_in,
-                                                     source_db)
+        obj_in, source_db = await distribution(obj_in, source_db)
         session.add(obj_in)
         session.add(source_db)
     await session.commit()
