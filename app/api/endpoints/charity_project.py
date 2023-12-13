@@ -2,17 +2,20 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.validators import (
-    check_invested_amount,
+    check_charity_project_before_update,
     check_charity_project_exists,
     check_charity_project_name_unique,
-    check_charity_project_before_update
+    check_invested_amount,
 )
 from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
-from app.schemas.charity_project import (CharityProjectCreate,
-                                         CharityProjectDB,
-                                         CharityProjectUpdate)
+from app.models import Donation
+from app.schemas.charity_project import (
+    CharityProjectCreate,
+    CharityProjectDB,
+    CharityProjectUpdate,
+)
 from app.services.investment import investing
 
 router = APIRouter()
@@ -31,7 +34,7 @@ async def create_new_charity_project(
     """Только для суперюзеров."""
     await check_charity_project_name_unique(charity_project.name, session)
     new_project = await charity_project_crud.create(charity_project, session)
-    new_project = await investing(new_project, session)
+    new_project = await investing(new_project, Donation, session)
     return new_project
 
 
@@ -57,7 +60,7 @@ async def delete_charity_project(
 ):
     """Только для суперюзеров."""
     charity_project = await check_charity_project_exists(project_id, session)
-    await check_invested_amount(charity_project)
+    check_invested_amount(charity_project)
 
     charity_project = await charity_project_crud.remove(
         charity_project, session

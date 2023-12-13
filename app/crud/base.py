@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.expression import false
 
 from app.models import User
 
@@ -16,14 +17,16 @@ class CRUDBase:
         self,
         obj_in,
         session: AsyncSession,
-        user: Optional[User] = None
+        user: Optional[User] = None,
+        commit: bool = True
     ):
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
-        await session.commit()
+        if commit:
+            await session.commit()
         await session.refresh(db_obj)
         return db_obj
 
@@ -49,6 +52,7 @@ class CRUDBase:
             db_obj,
             obj_in,
             session: AsyncSession,
+            commit: bool = True,
     ):
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
@@ -57,7 +61,8 @@ class CRUDBase:
             if field in update_data:
                 setattr(db_obj, field, update_data[field])
         session.add(db_obj)
-        await session.commit()
+        if commit:
+            await session.commit()
         await session.refresh(db_obj)
         return db_obj
 

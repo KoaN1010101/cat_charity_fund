@@ -27,10 +27,8 @@ SECRET=<секретный ключ>
 ```
 # Управление:
 
-## Установить alembic и выполнить миграции
+## Выполнить миграции
 ```
-alembic init --template async alembic 
-alembic revision --autogenerate -m "Add table reservation"
 alembic upgrade head
 ```
 ## Запустить приложение
@@ -39,4 +37,10 @@ uvicorn app.main:app --reload
 ```
 
 # Автор
-Никулин Владимир
+[Никулин Владимир](https://github.com/KoaN1010101)
+
+
+# Документация к API:
+
+Swagger: http://127.0.0.1:8000/docs
+Redoc: http://127.0.0.1:8000/redoc

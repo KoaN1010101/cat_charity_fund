@@ -30,7 +30,7 @@ async def check_charity_project_exists(
     return charity_project
 
 
-async def check_invested_amount(project: CharityProject):
+def check_invested_amount(project: CharityProject):
     if project.invested_amount > 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
