@@ -8,4 +8,5 @@ class CharityProject(InvestModel):
     description = Column(Text, nullable=False)
 
     def __repr__(self):
-        return super().__repr__()
+        return ('Название- {self.name}, '
+                'Описание - {self.description}')

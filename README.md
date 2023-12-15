@@ -42,5 +42,5 @@ uvicorn app.main:app --reload
 
 # Документация к API:
 
-Swagger: http://127.0.0.1:8000/docs
-Redoc: http://127.0.0.1:8000/redoc
+[Swagger](http://127.0.0.1:8000/docs)
+[Redoc](http://127.0.0.1:8000/redoc)
