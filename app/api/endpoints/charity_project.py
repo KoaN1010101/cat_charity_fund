@@ -11,7 +11,6 @@ from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
 from app.crud.donation import donation_crud
-from app.models import Donation
 from app.schemas.charity_project import (
     CharityProjectCreate,
     CharityProjectDB,
