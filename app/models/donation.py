@@ -10,5 +10,8 @@ class Donation(InvestModel):
     ))
 
     def __repr__(self):
-        return ('Комментарий- {self.comment}, '
-                'ID юзера - {self.user_id}')
+        return (
+            f'Комментарий- {self.comment}, '
+            f'ID юзера - {self.user_id}'
+            f' {super().__repr__()}'
+        )

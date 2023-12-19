@@ -39,12 +39,10 @@ async def create_new_charity_project(
         commit=False,
     )
     donations = await donation_crud.get_uninvested(session)
-    if len(donations) != 0:
-        calculated_investments = investing(
-            new_object=new_project,
-            db_objects=donations
-        )
-        session.add_all(calculated_investments)
+    session.add_all(investing(
+        target=new_project,
+        sources=donations
+    ))
     await session.commit()
     await session.refresh(new_project)
     return new_project

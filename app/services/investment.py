@@ -5,23 +5,23 @@ from app.models.base import InvestModel
 
 
 def investing(
-        new_object: InvestModel,
-        db_objects: List[InvestModel],
-) -> Set:
-    changed_db_objects = set()
-    if new_object.invested_amount is None:
-        new_object.invested_amount = 0
-    for db_object in db_objects:
-        investment_amount = min(
-            db_object.full_amount - db_object.invested_amount,
-            new_object.full_amount - new_object.invested_amount
+        target: InvestModel,
+        sources: List[InvestModel],
+) -> List[InvestModel]:
+    changed = list()
+    if target.invested_amount is None:
+        target.invested_amount = 0
+    for source in sources:
+        amount = min(
+            source.full_amount - source.invested_amount,
+            target.full_amount - target.invested_amount
         )
-        for changed_object in (db_object, new_object):
-            changed_object.invested_amount += investment_amount
-            if changed_object.full_amount == changed_object.invested_amount:
-                changed_object.fully_invested = True
-                changed_object.close_date = datetime.now()
-        changed_db_objects.add(db_object)
-        if new_object.fully_invested is True:
+        for invested in (source, target):
+            invested.invested_amount += amount
+            if invested.full_amount == invested.invested_amount:
+                invested.fully_invested = True
+                invested.close_date = datetime.now()
+        changed.append(source)
+        if target.fully_invested:
             break
-    return changed_db_objects
+    return changed
