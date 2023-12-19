@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Set
+from typing import List
 
 from app.models.base import InvestModel
 
