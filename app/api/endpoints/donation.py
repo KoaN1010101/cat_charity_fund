@@ -50,7 +50,7 @@ async def create_donation(
         commit=False,
     )
     charity_projects = await charity_project_crud.get_uninvested(session)
-    if len(charity_projects) != 0:
+    if charity_projects:
         calculated_investments = investing(
             target=new_donation,
             sources=charity_projects,
