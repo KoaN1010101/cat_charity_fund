@@ -9,9 +9,9 @@ def investing(
         sources: List[InvestModel],
 ) -> List[InvestModel]:
     changed = list()
+    if not target.invested_amount and target.invested_amount != 0:
+        target.invested_amount = 0
     for source in sources:
-        source.invested_amount = source.invested_amount or 0
-        target.invested_amount = target.invested_amount or 0
         amount = min(
             source.full_amount - source.invested_amount,
             target.full_amount - target.invested_amount
