@@ -16,7 +16,7 @@ git clone git@github.com:KoaN1010101/cat_charity_fund.git
 ## Активируйте venv и установите зависимости:
 ```
 python3 -m venv venv
-source venv/bin/activate
+source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 ## Создайте в корневой директории файл .env со следующим наполнением:
